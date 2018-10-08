@@ -20,12 +20,12 @@ const StyledLoaderWrapper = styled.div`
 `;
 
 const StyledLoader = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   position: absolute;
   top: 50%;
   left: 50%;
-  border: 8px solid #f3f3f3;
+  border: 6px solid #f3f3f3;
   border-left-color: #2196f3;
   border-radius: 50%;
   animation: ${spin} 1.1s infinite linear;

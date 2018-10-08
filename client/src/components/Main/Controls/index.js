@@ -6,6 +6,7 @@ import CurrencyControl from './CurrencyControl';
 import TransferControl from './TransferControl';
 
 const StyledControls = styled.div`
+  align-self: flex-start;
   width: 232px;
   padding: 15px;
   margin-right: 20px;
