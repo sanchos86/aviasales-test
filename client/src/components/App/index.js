@@ -7,7 +7,8 @@ import Loader from 'components/Loader';
 
 class App extends React.Component {
   state = {
-    isLoading: true,
+    isLoading: false,
+    isCurrencyExchanging: false,
     activeCurrency: 'RUB',
     ticketsToRender: [],
     tickets: [],
@@ -18,22 +19,70 @@ class App extends React.Component {
       isLoading: true
     });
     api.getTickets()
-      .then((tickets) => {
+      .then(({ tickets }) => {
         this.setState({
           isLoading: false,
           tickets
         })
       })
-      .catch(err => console.error(err));
+      .catch((err) => {
+        this.setState({
+          isLoading: false
+        });
+        console.error(err)
+      });
+  }
+  handleChangeCurrency = (newCurrency) => {
+    const { activeCurrency } = this.state;
+
+    if (activeCurrency === newCurrency) return;
+
+    if (newCurrency === 'RUB') {
+      this.setState({
+        activeCurrency: 'RUB',
+        ticketsToRender: this.state.tickets
+      });
+    } else {
+      this.exchangeCurrency(newCurrency);
+    }
+  }
+  exchangeCurrency = (newCurrency) => {
+    this.setState({
+      isCurrencyExchanging: true
+    });
+    api.getExchangeRate(newCurrency)
+      .then((data) => {
+        const exchangeRate = data[`RUB_${newCurrency}`];
+        const ticketsToRender = this.state.tickets.map((ticket) => {
+          let newPrice = ticket.price * exchangeRate;
+          return {...ticket, price: newPrice.toFixed(2)};
+        });
+        this.setState({
+          activeCurrency: newCurrency,
+          isCurrencyExchanging: false,
+          ticketsToRender
+        });
+      })
+      .catch((err) => {
+        this.setState({
+          isCurrencyExchanging: false
+        });
+        console.error(err);
+      });
   }
   render() {
+    const { activeCurrency, isLoading, isCurrencyExchanging } = this.state;
     return (
-      this.state.isLoading ? (
+      isLoading ? (
         <Loader />
       ) : (
         <>
           <Heading />
-          <Main />
+          <Main
+            isCurrencyExchanging={isCurrencyExchanging}
+            activeCurrency={activeCurrency}
+            handleChangeCurrency={this.handleChangeCurrency}
+          />
         </>
       )
     )

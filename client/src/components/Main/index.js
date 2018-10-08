@@ -1,12 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
 
-const StyledMain = styled.main`
-  
-`;
+import Controls from './Controls';
 
-const Main = () => (
-  <StyledMain/>
+const Main = ({ activeCurrency, handleChangeCurrency, isCurrencyExchanging }) => (
+  <main>
+    <Controls
+      isCurrencyExchanging={isCurrencyExchanging}
+      activeCurrency={activeCurrency}
+      handleChangeCurrency={handleChangeCurrency}
+    />
+  </main>
 );
 
 export default Main;

@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=cyrillic');
 @import '../node_modules/normalize.css/normalize.css';
 
+* {
+    box-sizing: border-box;
+}
+
 html,
 body {
     height: 100%;
@@ -9,6 +13,7 @@ body {
 body {
     position: relative;
     background-color: #f3f7fa;
+    color: #4a4a4a;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
 }
