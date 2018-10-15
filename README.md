@@ -1,3 +1,5 @@
+## Open [app](https://calm-sands-83974.herokuapp.com/)
+
 ## Тестовое задание Aviasales ([frontend](https://aviasales.recruitee.com/o/frontend-developer-js-coffeescript-react%C2%A0redux--aviasalesru))
 
 Основной фронтенд проект нашей команды — это страница выдачи билетов со множеством фильтров, настроек и, собственно, билетов.
