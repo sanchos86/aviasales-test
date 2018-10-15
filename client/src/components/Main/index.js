@@ -1,20 +1,41 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import Controls from './Controls';
 import Tickets from './Tickets';
 
-const Main = ({ activeCurrency, handleChangeCurrency, isCurrencyExchanging, ticketsToRender }) => (
-  <main style={{display: 'flex'}}>
+const StyledMain = styled.main`
+  display: flex;
+  flex-direction: column;
+  
+  @media (min-width: 769px) {
+    flex-direction: row;
+  }
+`;
+
+const Main = ({
+  activeCurrency,
+  handleCurrencyChange,
+  isCurrencyExchanging,
+                ticketsFilteredByStops,
+  stops,
+  handleStopsChange,
+  handleUncheckOther
+}) => (
+  <StyledMain>
     <Controls
       isCurrencyExchanging={isCurrencyExchanging}
       activeCurrency={activeCurrency}
-      handleChangeCurrency={handleChangeCurrency}
+      handleCurrencyChange={handleCurrencyChange}
+      stops={stops}
+      handleStopsChange={handleStopsChange}
+      handleUncheckOther={handleUncheckOther}
     />
     <Tickets
-      ticketsToRender={ticketsToRender}
+      ticketsFilteredByStops={ticketsFilteredByStops}
       activeCurrency={activeCurrency}
     />
-  </main>
+  </StyledMain>
 );
 
 export default Main;

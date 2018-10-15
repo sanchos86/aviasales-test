@@ -3,22 +3,25 @@ import styled from 'styled-components';
 
 import Logo from 'images/Logo.png';
 
+const StyledHeading = styled.div`
+  text-align: center;
+  margin-bottom: 3.125rem;
+`;
+
 const StyledLogo = styled.img.attrs({
   src: Logo,
   alt: 'Aviasales'
 })`
   width: 60px;
   height: 61px;
-  margin-bottom: 50px;
 `;
 
 const Heading = () => (
-  <div style={{textAlign: 'center'}}>
+  <StyledHeading>
     <a href="https://www.aviasales.ru/">
-      <StyledLogo/>
+      <StyledLogo />
     </a>
-  </div>
+  </StyledHeading>
 );
 
 export default Heading;
-

@@ -1,11 +1,13 @@
 import React from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faRubleSign, faDollarSign, faEuroSign, faPlane } from '@fortawesome/free-solid-svg-icons';
+import { values } from 'ramda';
 
 import api from 'api';
-import Heading from "components/Heading";
+import Heading from 'components/Heading';
 import Main from 'components/Main';
 import Loader from 'components/Loader';
+import Error from 'components/Error';
 
 library.add(faRubleSign, faDollarSign, faEuroSign, faPlane);
 
@@ -14,10 +16,13 @@ class App extends React.Component {
     isLoading: false,
     isCurrencyExchanging: false,
     activeCurrency: 'RUB',
-    ticketsToRender: [],
+    ticketsWithCurrentCurrency: [],
+    ticketsFilteredByStops: [],
     tickets: [],
-    error: null
-  }
+    error: null,
+    stops: {},
+    maxStops: null
+  };
   componentDidMount() {
     this.setState({
       isLoading: true
@@ -25,80 +30,164 @@ class App extends React.Component {
     api.getTickets()
       .then(({ tickets }) => {
         const sortedTickets = tickets.sort((ticket_1, ticket_2) => ticket_1.price - ticket_2.price);
+        const stops = {
+          [sortedTickets[0].stops]: sortedTickets[0].stops
+        };
+        const maxStops = sortedTickets.reduce((acc, currValue) => {
+          stops[currValue.stops] = currValue.stops;
+          return acc.stops > currValue.stops ? acc : currValue;
+        }).stops;
+
+        if (Object.keys(stops).length - 1 === maxStops) {
+          stops.all = 'all';
+        }
+
         this.setState({
           isLoading: false,
-          ticketsToRender: sortedTickets,
-          tickets: sortedTickets
+          ticketsWithCurrentCurrency: sortedTickets,
+          tickets: sortedTickets,
+          ticketsFilteredByStops: sortedTickets,
+          stops,
+          maxStops
         });
       })
-      .catch((err) => {
+      .catch(() => {
         this.setState({
-          isLoading: false
+          isLoading: false,
+          error: 'Something went wrong<br>Please try again later'
         });
-        console.error(err)
       });
   }
-  handleChangeCurrency = (newCurrency) => {
-    const { activeCurrency } = this.state;
+  handleCurrencyChange = (newCurrency) => {
+    const { activeCurrency, tickets, stops } = this.state;
 
     if (activeCurrency === newCurrency) return;
 
     if (newCurrency === 'RUB') {
+      const ticketsFilteredByStops = this.filterTickets(tickets, stops);
       this.setState({
         activeCurrency: 'RUB',
-        ticketsToRender: this.state.tickets
+        ticketsWithCurrentCurrency: this.state.tickets,
+        ticketsFilteredByStops
       });
     } else {
       this.exchangeCurrency(newCurrency);
     }
-  }
+  };
   exchangeCurrency = (newCurrency) => {
     this.setState({
       isCurrencyExchanging: true
     });
     api.getExchangeRate(newCurrency)
       .then((data) => {
+        const { tickets, stops } = this.state;
         const exchangeRate = data[`RUB_${newCurrency}`];
-        const ticketsToRender = this.state.tickets.map((ticket) => {
+        const ticketsWithCurrentCurrency = tickets.map((ticket) => {
           let newPrice = ticket.price * exchangeRate;
           return {...ticket, price: +newPrice.toFixed(2)};
         });
+        const ticketsFilteredByStops = this.filterTickets(ticketsWithCurrentCurrency, stops);
         this.setState({
           activeCurrency: newCurrency,
           isCurrencyExchanging: false,
-          ticketsToRender
+          ticketsWithCurrentCurrency,
+          ticketsFilteredByStops
         });
       })
-      .catch((err) => {
+      .catch(() => {
         this.setState({
-          isCurrencyExchanging: false
+          isCurrencyExchanging: false,
+          error: 'Something went wrong<br>Please try again later'
         });
-        console.error(err);
       });
-  }
+  };
+
+  handleStopsChange = (item) => {
+    let { stops, maxStops, ticketsWithCurrentCurrency } = this.state;
+    stops = {...stops};
+    const isChecked = item in stops;
+
+    if (item === 'all') {
+      stops = {};
+      if (!isChecked) {
+        stops = {
+          'all': 'all'
+        };
+        for (let i = 0; i <= maxStops; i++) {
+          stops[i] = i;
+        }
+      }
+    } else {
+      if (isChecked) {
+        delete stops[item];
+        if ('all' in stops) {
+          delete stops.all;
+        }
+      } else {
+        stops[item] = +item;
+        if (Object.keys(stops).length - 1 === maxStops) {
+          stops.all = 'all';
+        }
+      }
+    }
+    this.setState({
+      ticketsFilteredByStops: this.filterTickets(ticketsWithCurrentCurrency, stops),
+      stops
+    });
+  };
+
+  handleUncheckOther = (item) => {
+    const stops = {
+      [item]: +item
+    };
+    const { ticketsWithCurrentCurrency } = this.state;
+    this.setState({
+      ticketsFilteredByStops: this.filterTickets(ticketsWithCurrentCurrency, stops),
+      stops
+    });
+  };
+
+  filterTickets = (tickets, stops) => {
+    return tickets.filter((ticket) => {
+      return values(stops).indexOf(ticket.stops) !== -1;
+    });
+  };
+
   render() {
     const {
       activeCurrency,
       isLoading,
       isCurrencyExchanging,
-      ticketsToRender
+      ticketsFilteredByStops,
+      stops,
+      error
     } = this.state;
 
-    return (
-      isLoading ? (
-        <Loader />
-      ) : (
+    let element;
+
+    if (error && !isLoading) {
+      element = <Error text={error} />;
+    }
+    if (!error && isLoading) {
+      element = <Loader />;
+    }
+    if (!error && !isLoading) {
+      element = (
         <>
           <Heading />
           <Main
             isCurrencyExchanging={isCurrencyExchanging}
             activeCurrency={activeCurrency}
-            handleChangeCurrency={this.handleChangeCurrency}
-            ticketsToRender={ticketsToRender}
+            handleCurrencyChange={this.handleCurrencyChange}
+            ticketsFilteredByStops={ticketsFilteredByStops}
+            stops={stops}
+            handleStopsChange={this.handleStopsChange}
+            handleUncheckOther={this.handleUncheckOther}
           />
         </>
-      )
-    )
+      );
+    }
+    return element;
   }
 }
 

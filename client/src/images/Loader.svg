@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" class="cf-preloader" viewBox="0 0 40 40">
+  <defs>
+    <linearGradient id="preloader-gradient" gradientUnits="userSpaceOnUse" y1="30" x2="40" y2="30">
+      <stop offset="0" stop-color="#0076eb"></stop>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
+    </linearGradient>
+  </defs>
+  <path fill="url(#preloader-gradient)" d="M20,35c-8.3,0-15-6.7-15-15H0c0,11,9,20,20,20c11,0,20-9,20-20h-5C35,28.3,28.3,35,20,35z"></path>
+</svg>

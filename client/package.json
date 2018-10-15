@@ -10,6 +10,7 @@
     "axios": "^0.18.0",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.2",
+    "ramda": "^0.25.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.4",
@@ -29,5 +30,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "prettier": {
+    "singleQuote": true
+  }
 }

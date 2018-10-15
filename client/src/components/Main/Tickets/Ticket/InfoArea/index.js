@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getDayShortName, getStopsText } from 'utils';
+import { getDayShortName, getStopsText } from 'utils/helpers';
 import {
   StyledInfoArea,
   StyledInfoAreaItem,

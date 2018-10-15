@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const StyledHeading = styled.h4`
+  padding: 0 15px;
   font-size: 12px;
   font-weight: 600;
   line-height: 19px;

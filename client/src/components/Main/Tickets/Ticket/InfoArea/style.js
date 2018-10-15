@@ -3,8 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const StyledInfoArea = styled.div`
   flex-grow: 1;
-  padding: 26px 25px 10px;
+  padding: 15px;
   font-size: 12px;
+  
+  @media (min-width: 525px) {
+    padding: 26px 25px 10px;
+  }
 `;
 
 export const StyledInfoAreaItem = styled.div`
@@ -14,9 +18,13 @@ export const StyledInfoAreaItem = styled.div`
 
 export const StyledTime = styled.time`
   color: #4a4a4a;
-  font-size: 32px;
+  font-size: 26px;
   line-height: 26px;
   margin-bottom: 12px;
+  
+  @media (min-width: 525px) {
+    font-size: 32px;
+  }
 `;
 
 export const StyledStops = styled.div`
@@ -34,7 +42,7 @@ export const StyledPlaneLine = styled.div`
 
 export const StyledLine = styled.div`
   align-self: center;
-  flex-basis: 96px;
+  flex-basis: 65%;
   height: 1px; 
   background-color: #8b9497; 
   margin-right: 2px;
@@ -43,7 +51,7 @@ export const StyledLine = styled.div`
 export const StyledPlane = styled(FontAwesomeIcon).attrs({
   icon: 'plane'
 })`
-  width: 1em;
+  width: 1em !important;
   height: 1em;
   font-size: 13px; 
   color: #8b9497;

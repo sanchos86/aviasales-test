@@ -15,11 +15,11 @@ const StyledCurrencyExchangeControl = styled.button.attrs({
   font-size: 12px;
   font-weight: 600;
   line-height: 22px;
-  background-color: ${props => props.isActive ? '#2196f3' : '#ffffff'};
-  color: ${props => props.isActive ? '#ffffff' : '#2196f3'};
-  border: 1px solid ${props => props.isActive ? '#2196f3' : '#d2d5d6'};
+  background-color: ${props => (props.isActive ? '#2196f3' : '#ffffff')};
+  color: ${props => (props.isActive ? '#ffffff' : '#2196f3')};
+  border: 1px solid ${props => (props.isActive ? '#2196f3' : '#d2d5d6')};
   cursor: url(${Pointer}), pointer;
-  transition: .1s border-color linear, .1s background-color linear;
+  transition: 0.1s border-color linear, 0.1s background-color linear;
   letter-spacing: 0.5px;
   &:first-of-type {
     border-radius: 5px 0 0 5px;
@@ -28,15 +28,19 @@ const StyledCurrencyExchangeControl = styled.button.attrs({
     border-radius: 0 5px 5px 0;
   }
   &:hover {
-    background-color: ${props => props.isActive ? '#2196f3' : '#f2fcff'};
-    border-color: ${props => props.isActive ? '#2196f3' : '#64b5f5'};
+    background-color: ${props => (props.isActive ? '#2196f3' : '#f2fcff')};
+    border-color: ${props => (props.isActive ? '#2196f3' : '#64b5f5')};
   }
 `;
 
-const CurrencyExchangeControl = ({ isActive, currency, handleChangeCurrency }) => (
+const CurrencyExchangeControl = ({
+  isActive,
+  currency,
+  handleCurrencyChange
+}) => (
   <StyledCurrencyExchangeControl
     isActive={isActive}
-    onClick={() => handleChangeCurrency(currency)}
+    onClick={() => handleCurrencyChange(currency)}
   >
     {currency}
   </StyledCurrencyExchangeControl>
@@ -45,7 +49,7 @@ const CurrencyExchangeControl = ({ isActive, currency, handleChangeCurrency }) =
 CurrencyExchangeControl.propTypes = {
   isActive: PropTypes.bool.isRequired,
   currency: PropTypes.string.isRequired,
-  handleChangeCurrency: PropTypes.func.isRequired
+  handleCurrencyChange: PropTypes.func.isRequired
 };
 
 export default CurrencyExchangeControl;
