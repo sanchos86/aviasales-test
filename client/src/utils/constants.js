@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost:8080';
+export const API_URL = 'https://ancient-sierra-95257.herokuapp.com/';
 
 export const currencies = ['RUB', 'USD', 'EUR'];
 
