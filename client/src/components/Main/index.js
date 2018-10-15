@@ -17,7 +17,7 @@ const Main = ({
   activeCurrency,
   handleCurrencyChange,
   isCurrencyExchanging,
-                ticketsFilteredByStops,
+  ticketsFilteredByStops,
   stops,
   handleStopsChange,
   handleUncheckOther
