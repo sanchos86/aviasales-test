@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import Pointer from 'images/Pointer.png';
-import Checked from 'images/Checked.svg';
+import Pointer from 'images/pointer.png';
+import Checked from 'images/checked.svg';
 
 export const StyledStopsControlItem = styled.div`
   display: flex;

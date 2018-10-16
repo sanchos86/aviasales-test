@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import LoaderImg from 'images/Loader.svg';
+import LoaderImg from 'images/loader.svg';
 
 const spin = keyframes`
   0% {

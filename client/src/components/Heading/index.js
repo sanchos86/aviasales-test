@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Logo from 'images/Logo.png';
+import Logo from 'images/logo.png';
 
 const StyledHeading = styled.div`
   text-align: center;

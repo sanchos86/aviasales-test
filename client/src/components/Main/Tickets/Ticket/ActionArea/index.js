@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import Pointer from 'images/Pointer.png';
+import Pointer from 'images/pointer.png';
 import { getCurrencySign } from 'utils/helpers';
 
 const StyledActionArea = styled.div`

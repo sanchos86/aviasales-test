@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import Pointer from 'images/Pointer.png';
+import Pointer from 'images/pointer.png';
 
 const StyledCurrencyExchangeControl = styled.button.attrs({
   type: 'button'
