@@ -24,6 +24,9 @@ class App extends React.Component {
     maxStops: null
   };
   componentDidMount() {
+    this.fetchTickets();
+  }
+  fetchTickets = () => {
     this.setState({
       isLoading: true
     });
@@ -54,10 +57,10 @@ class App extends React.Component {
       .catch(() => {
         this.setState({
           isLoading: false,
-          error: 'Something went wrong<br>Please try again later'
+          error: 'Something went wrong\nPlease try again later'
         });
       });
-  }
+  };
   handleCurrencyChange = (newCurrency) => {
     const { activeCurrency, tickets, stops } = this.state;
 
@@ -97,7 +100,7 @@ class App extends React.Component {
       .catch(() => {
         this.setState({
           isCurrencyExchanging: false,
-          error: 'Something went wrong<br>Please try again later'
+          error: 'Something went wrong\nPlease try again later'
         });
       });
   };
@@ -147,11 +150,9 @@ class App extends React.Component {
     });
   };
 
-  filterTickets = (tickets, stops) => {
-    return tickets.filter((ticket) => {
-      return values(stops).indexOf(ticket.stops) !== -1;
-    });
-  };
+  filterTickets = (tickets, stops) => tickets.filter(
+    ticket => values(stops).includes(ticket.stops)
+  );
 
   render() {
     const {
@@ -163,31 +164,24 @@ class App extends React.Component {
       error
     } = this.state;
 
-    let element;
+    if (isLoading) return <Loader />;
 
-    if (error && !isLoading) {
-      element = <Error text={error} />;
-    }
-    if (!error && isLoading) {
-      element = <Loader />;
-    }
-    if (!error && !isLoading) {
-      element = (
-        <>
-          <Heading />
-          <Main
-            isCurrencyExchanging={isCurrencyExchanging}
-            activeCurrency={activeCurrency}
-            handleCurrencyChange={this.handleCurrencyChange}
-            ticketsFilteredByStops={ticketsFilteredByStops}
-            stops={stops}
-            handleStopsChange={this.handleStopsChange}
-            handleUncheckOther={this.handleUncheckOther}
-          />
-        </>
-      );
-    }
-    return element;
+    if (error) return <Error text={error} />;
+
+    return (
+      <>
+        <Heading />
+        <Main
+          isCurrencyExchanging={isCurrencyExchanging}
+          activeCurrency={activeCurrency}
+          handleCurrencyChange={this.handleCurrencyChange}
+          ticketsFilteredByStops={ticketsFilteredByStops}
+          stops={stops}
+          handleStopsChange={this.handleStopsChange}
+          handleUncheckOther={this.handleUncheckOther}
+        />
+      </>
+    );
   }
 }
 

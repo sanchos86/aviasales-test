@@ -48,9 +48,7 @@ export const StyledLine = styled.div`
   margin-right: 2px;
 `;
 
-export const StyledPlane = styled(FontAwesomeIcon).attrs({
-  icon: 'plane'
-})`
+export const StyledPlane = styled(FontAwesomeIcon)`
   width: 1em !important;
   height: 1em;
   font-size: 13px; 

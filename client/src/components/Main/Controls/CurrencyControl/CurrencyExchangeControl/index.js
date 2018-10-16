@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 
 import Pointer from 'images/pointer.png';
 
-const StyledCurrencyExchangeControl = styled.button.attrs({
-  type: 'button'
-})`
+const StyledCurrencyExchangeControl = styled.button`
   width: calc(100% / 3);
   padding: 9px 10px 7px;
   box-sizing: inherit;
@@ -39,6 +37,7 @@ const CurrencyExchangeControl = ({
   handleCurrencyChange
 }) => (
   <StyledCurrencyExchangeControl
+    type="button"
     isActive={isActive}
     onClick={() => handleCurrencyChange(currency)}
   >

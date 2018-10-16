@@ -18,9 +18,7 @@ const StyledActionArea = styled.div`
   }
 `;
 
-const StyledActionButton = styled.button.attrs({
-  type: 'button'
-})`
+const StyledActionButton = styled.button`
   width: 160px;
   height: 56px;
   border-radius: 5px;
@@ -44,7 +42,7 @@ const StyledActionButton = styled.button.attrs({
 
 const ActionArea = ({ activeCurrency, price }) => (
   <StyledActionArea>
-    <StyledActionButton>
+    <StyledActionButton type="button">
       Купить
       <br />
       за {price} <FontAwesomeIcon icon={getCurrencySign(activeCurrency)} />

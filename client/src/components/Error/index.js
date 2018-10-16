@@ -6,10 +6,11 @@ const StyledError = styled.p`
   text-align: center;
   color: #ff0000;
   font-size: 32px;
+  white-space: pre-line;
 `;
 
 const Error = ({ text }) => (
-  <StyledError dangerouslySetInnerHTML={{__html: text}} />
+  <StyledError>{text}</StyledError>
 );
 
 Error.propTypes = {

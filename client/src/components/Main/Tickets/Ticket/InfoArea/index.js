@@ -38,7 +38,7 @@ const InfoArea = ({ ticket }) => {
           <div dangerouslySetInnerHTML={getStopsText(stops)} />
           <StyledPlaneLine>
             <StyledLine />
-            <StyledPlane />
+            <StyledPlane icon="plane" />
           </StyledPlaneLine>
         </StyledStops>
         <StyledTime>{arrivalTime}</StyledTime>
