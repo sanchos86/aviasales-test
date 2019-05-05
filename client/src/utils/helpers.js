@@ -1,9 +1,11 @@
+import { API_URL } from 'utils/constants';
+
 /**
  * @param {string} targetCurrency - new currency
  * @returns {string} - url to get exchange rate
  */
 export const getCurrencyExchangeUrl = targetCurrency => {
-  return `https://free.currencyconverterapi.com/api/v6/convert?q=RUB_${targetCurrency}&compact=ultra`;
+  return `${API_URL}api/convert?q=RUB_${targetCurrency}&compact=ultra`;
 };
 
 /**
